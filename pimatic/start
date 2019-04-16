@@ -1,0 +1,28 @@
+#! /bin/bash
+
+if [ -e "drive/config.json" ]; then
+    echo "Config JSON is set"
+else
+    echo "Config JSON not set, Copy from Build"
+    cp userdata/config.json drive/config.json
+fi
+if [ -e "drive/pimatic-database.sqlite" ]; then
+    echo "DB 1 set"
+else
+    echo "DB 1 copy from Build"
+    cp userdata/pimatic-database.sqlite drive/pimatic-database.sqlite
+fi
+if [ -e "drive/pimatic-database.sqlite-wal" ]; then
+    echo "DB 2 set"
+else
+    echo "DB 2 copy from Build"
+    cp userdata/pimatic-database.sqlite-wal drive/pimatic-database.sqlite-wal
+fi
+ln -s /usr/src/app/drive/config.json /usr/src/app/pimatic-app/config.json
+ln -s /usr/src/app/drive/pimatic-database.sqlite /usr/src/app/pimatic-app/pimatic-database.sqlite
+ln -s /usr/src/app/drive/pimatic-database.sqlite-wal /usr/src/app/pimatic-app/pimatic-database.sqlite-wal
+
+while true; do
+    /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js
+    sleep 60
+done

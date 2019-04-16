@@ -1,0 +1,51 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:jessie-run
+ENV INITSYSTEM on
+
+# needed to autoate the zway installation
+ENV BOXED yes
+ENV INSTALL_DIR /opt
+
+# upgrade and install all the libs zway needs ourself in one go
+RUN apt-get update \
+ && apt-get upgrade -y \
+ && apt-get install -y wget supervisor \
+ && mkdir -p /var/log/supervisor
+
+# /etc/z-way/box_type will put the script into boxed mode - automated install
+RUN mkdir -p /etc/z-way/ && touch /etc/z-way/box_type
+
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/opt/z-way-server/libs
+
+COPY supervisor/supervisor_main.conf /etc/supervisor/conf.d/main.conf
+COPY supervisor/mongoose.conf /etc/supervisor/conf.d/mongoose.conf
+COPY supervisor/zway-server.conf /etc/supervisor/conf.d/zway-server.conf
+COPY supervisor/zbw_connect.conf /etc/supervisor/conf.d/zbw_connect.conf
+COPY supervisor/balena_entry.conf /etc/supervisor/conf.d/balena_entry.conf
+COPY supervisor/user_start.conf /etc/supervisor/conf.d/user_start.conf
+
+
+COPY zway_installer.sh /root/zway_installer.sh
+COPY zbw_connect_start.sh /usr/local/bin/zbw_connect_start
+
+#Copy User Data
+COPY ./config/config /opt/z-way-server/config
+COPY ./config/storage /opt/z-way-server/automation/storage
+COPY ./config/userModules /opt/z-way-server/automation/userModules
+
+ENV UDEV=1
+
+RUN wget -q -O - razberry.z-wave.me/install | bash
+
+
+# disable the build-in startup scripts, since we use supervisord ...
+RUN /etc/init.d/mongoose stop \
+ && /etc/init.d/z-way-server stop \
+ && /etc/init.d/zbw_connect stop \
+ && update-rc.d mongoose remove \
+ && update-rc.d z-way-server remove \
+ && update-rc.d zbw_connect remove
+
+COPY ./start.sh ./opt
+
+ENTRYPOINT ["/usr/bin/supervisord", "-c"]
+CMD ["/etc/supervisor/supervisord.conf"]

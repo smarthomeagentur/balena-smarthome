@@ -1,0 +1,75 @@
+version: '2'
+volumes: 
+    openhab_conf:
+    openhab_userdata:
+    openhab_addons:
+    pimatic_data:
+    pimatic_compile:
+    zway_config1:
+    zway_config2:
+    zway_config3:
+    pihole_config:
+    dnsmasq_config:
+services:
+  router:
+    restart: always
+    network_mode: host
+    build: ./router
+    privileged: true
+    environment:
+    - ROUTER_IP=200
+    labels:
+      io.resin.features.dbus: '1'
+      io.resin.features.kernel-modules: '1'
+      io.resin.features.firmware: '1'
+  pihole:
+    build: ./pihole
+    ports:
+      - "192.168.101.200:53:53/tcp"
+      - "192.168.101.200:53:53/udp"
+      - "192.168.101.200:67:67/udp"
+      - "192.168.101.200:80:80"
+      - "192.168.101.200:443:443"
+    privileged: true
+    volumes:
+      - 'pihole_config:/etc/pihole'
+      - 'dnsmasq_config:/etc/dnsmasq.d'
+    cap_add:
+      - 'NET_ADMIN'
+    dns:
+      - '127.0.0.1'
+      - '1.1.1.1'
+  dnscrypt-proxy:
+    build: ./dnscrypt-proxy
+    ports:
+      - '192.168.101.200:5300:53/tcp'
+      - '192.168.101.200:5300:53/udp'
+    dns:
+      - '127.0.0.1'
+      - '1.1.1.1'
+  pimatic:
+    build: ./pimatic
+    volumes: 
+            - 'pimatic_data:/usr/src/app/drive'
+            - 'pimatic_compile:/usr/src/app/pimatic-app/node_modules'
+    privileged: true
+    labels:
+      io.resin.features.dbus: '1'
+      io.resin.features.kernel-modules: '1'
+      io.resin.features.firmware: '1'
+    ports:
+      - "192.168.101.105:80:80"
+      - "192.168.101.105:81:81"
+  zway:
+    build: ./zway
+    ports:
+      - "8083:8083"
+    volumes: 
+            - 'zway_config1:/opt/z-way-server/config'
+            - 'zway_config2:/opt/z-way-server/automation/storage'
+            - 'zway_config3:/opt/z-way-server/automation/userModules'
+    privileged: true
+    labels:
+      io.resin.features.dbus: '1'
+      io.resin.features.kernel-modules: '1'
+      io.resin.features.firmware: '1'
