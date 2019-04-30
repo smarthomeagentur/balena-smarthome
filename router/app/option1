@@ -78,8 +78,7 @@ while true; do
         {
         ping -c 3 google.com ; con_test=$?
         } &> /dev/null
-        if ((con_test == 0)); then
-        else
+        if ((con_test != 0)); then
             echo "Connection Break"
             {
             nmcli connection down balena-cellular && nmcli connection up balena-cellular
