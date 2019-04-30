@@ -15,6 +15,8 @@ services:
     restart: always
     network_mode: host
     build: ./router
+    volumes:
+      - 'router_conf:/usr/src/app/run'
     privileged: true
     environment:
     - ROUTER_IP=200

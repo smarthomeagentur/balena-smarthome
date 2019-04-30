@@ -4,9 +4,10 @@ type=gsm
 autoconnect=true
 
 [gsm]
-apn=pinternet.interkom.de
+apn=internet.t-mobile
 number=*99#
-password-flags=1
+username=ppp
+password=ppp
 
 [serial]
 baud=115200

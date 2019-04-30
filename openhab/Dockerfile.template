@@ -85,7 +85,7 @@ RUN wget -nv -O /tmp/openhab.zip "${OPENHAB_URL}" && \
 
 # Expose volume with configuration and userdata dir
 # VOLUME ${APPDIR}/conf ${APPDIR}/userdata ${APPDIR}/addons
-
+COPY ./config/addons {APPDIR}/addons
 # Expose HTTP, HTTPS, Console and LSP ports
 #EXPOSE 8080 8443 8101 5007
 

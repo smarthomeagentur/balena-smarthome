@@ -1,0 +1,92 @@
+#! /bin/bash
+export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
+ip="null"
+oldip="null"
+plugged="null"
+wd_count=0
+while true; do
+    ip=`ifconfig eth0| sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'| cut -d'.' -f1-3`
+    ip2="$ip.$ROUTER_IP"
+    ip="$ip.0/24"
+    {
+    eth1=`cat /sys/class/net/eth1/operstate` 2>/dev/null
+    eth2=`cat /sys/class/net/eth2/operstate` 2>/dev/null
+    wlan0=`cat /sys/class/net/wlan0/operstate` 2>/dev/null
+    wlan1=`cat /sys/class/net/wlan1/operstate` 2>/dev/null
+    ppp0=`cat /sys/class/net/ppp0/operstate` 2>/dev/null
+    } &> /dev/null
+    
+    if [[ "$oldip" != "$ip" ]]; then
+        oldip=$ip
+        plugged="null"
+        if [[ $ip == *"."*"."* ]]; then
+            echo "IP Set to $ip"
+            echo "Second IP $ip2"
+            {
+                iptables -D FORWARD -o eth0 -j DROP
+                nmcli connection modify my-ethernet1 ipv4.addresses $ip2
+                nmcli connection down my-ethernet1 && nmcli connection up my-ethernet1
+            } &> /dev/null
+        else
+            echo "No IP Set"
+            iptables -I FORWARD -o eth0 -j DROP
+        fi
+    fi
+
+    if [ ! -z "$plugged" ]; then
+        echo "Network Changed"
+        if [ ! -z "$wlan1" ]; then
+            echo "Update WLAN1"
+            if [ ! -z "$eth1" ]; then
+                {
+                iptables -D FORWARD -i wlan1 -o eth1 -j ACCEPT
+                iptables -I FORWARD -i wlan1 -o eth1 -j ACCEPT
+                } &> /dev/null
+            fi
+            {
+            iptables -D FORWARD -i wlan1 -o eth0 -d $ip -j DROP
+            iptables -I FORWARD -i wlan1 -o eth0 -d $ip -j DROP
+            } &> /dev/null
+        fi
+
+        if [ ! -z "$wlan0" ]; then
+            echo "Update WLAN0"
+            if [ ! -z "$eth1" ]; then
+                {
+                iptables -D FORWARD -i wlan0 -o eth1 -j ACCEPT
+                iptables -I FORWARD -i wlan0 -o eth1 -j ACCEPT
+                } &> /dev/null
+            fi
+            {
+            iptables -D FORWARD -i wlan0 -o eth0 -d $ip -j DROP
+            iptables -I FORWARD -i wlan0 -o eth0 -d $ip -j DROP
+            } &> /dev/null
+        fi
+
+        if [ ! -z "$eth1" ]; then
+            echo "Update ETH1"
+            {
+            iptables -D FORWARD -i eth1 -o eth0 -d $ip -j DROP
+            iptables -I FORWARD -i eth1 -o eth0 -d $ip -j DROP
+            } &> /dev/null
+        fi
+
+    fi
+    wd_count=$((wd_count + 1))
+    if (( wd_count > (25) )); then
+        wd_count=0
+        {
+        ping -c 3 google.com ; con_test=$?
+        } &> /dev/null
+        if ((con_test == 0)); then
+        else
+            echo "Connection Break"
+            {
+            nmcli connection down balena-cellular && nmcli connection up balena-cellular
+            } &> /dev/null
+        fi
+    fi
+
+    plugged=`iptables -t filter -L FORWARD --line-numbers -n | head -n 3 | grep RELATED`
+    sleep 20
+done

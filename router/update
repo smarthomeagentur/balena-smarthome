@@ -1,0 +1,5 @@
+#! /bin/bash
+
+cp ./app/* ./run/
+#./run/start
+pkill start

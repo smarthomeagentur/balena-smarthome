@@ -1,0 +1,136 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 2 (0x2)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=DE, ST=SA, L=Dresden, O=OpenVPN, OU=IT, CN=WinServer/name=HomePC/emailAddress=info@smarthome-agentur.de
+        Validity
+            Not Before: Apr 18 19:02:55 2019 GMT
+            Not After : Apr 15 19:02:55 2029 GMT
+        Subject: C=DE, ST=SA, L=Dresden, O=OpenVPN, OU=IT, CN=PiClient/name=HomePC/emailAddress=info@smarthome-agentur.de
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (4096 bit)
+                Modulus:
+                    00:df:08:92:1f:43:c1:4b:ac:36:02:32:79:90:02:
+                    e0:b9:3e:38:39:e4:f2:dc:34:bd:f4:ed:c1:7f:dd:
+                    fe:e4:6d:79:6e:2b:92:c1:04:43:2e:9c:4c:57:76:
+                    7c:27:df:3e:1f:9e:8c:f2:1e:a5:29:15:94:97:80:
+                    e5:d5:bc:a8:f6:5f:b2:c7:10:15:74:1d:44:05:7b:
+                    3f:29:ab:3d:81:9b:a5:75:f8:8a:11:84:99:dc:d1:
+                    f6:02:a1:78:90:73:5a:63:b3:03:8d:52:5a:a7:3c:
+                    16:75:41:fb:56:7a:10:50:2b:7e:9b:4b:33:b6:32:
+                    8a:82:16:30:dd:4a:21:0b:02:8a:9a:f3:e6:95:91:
+                    c3:96:d1:4f:18:af:2d:5b:63:2b:c2:c5:50:f2:31:
+                    fe:64:cf:a0:1e:07:ff:df:93:b2:62:18:94:42:7b:
+                    8d:c9:7c:f4:a8:0f:8a:b8:8c:36:6c:8d:f3:d8:ca:
+                    f8:6b:ce:08:c7:1e:56:23:58:2d:eb:e5:be:43:c5:
+                    36:57:9c:bc:a3:58:5b:f7:b7:64:b4:3b:84:73:95:
+                    ec:8b:99:29:6a:6b:e6:6f:40:90:90:8b:93:d7:d5:
+                    fe:cb:28:fa:b0:da:10:f8:e1:9a:b4:67:0d:00:77:
+                    0d:a8:6b:25:24:7a:fe:1e:69:b4:58:a6:ed:03:7c:
+                    0a:5d:17:41:f5:03:a3:71:73:d2:da:1c:fe:1e:24:
+                    cb:69:d2:e8:43:3f:f4:e5:89:e8:87:b8:63:cc:31:
+                    15:e6:ed:f0:ff:2e:0e:52:9b:47:49:fb:e3:23:2e:
+                    23:28:c6:d3:41:e4:07:33:a8:cb:3a:7b:d5:30:ec:
+                    88:b2:1d:bb:ef:77:e4:1c:59:11:c4:5e:3d:4b:61:
+                    e7:06:c7:be:09:f4:72:bc:68:89:cf:17:2c:fb:54:
+                    99:aa:7d:b5:96:d2:6c:bc:2f:23:2a:dd:f6:39:87:
+                    96:a3:b5:e9:ea:ba:f9:a9:f7:d8:48:07:a9:be:b8:
+                    be:a2:4a:20:d8:c2:96:42:f9:b2:d0:93:cf:2a:65:
+                    67:97:bc:03:06:c5:b7:56:93:1f:31:24:6e:f3:4f:
+                    1c:ab:58:00:a4:b3:76:68:91:8f:cd:95:4a:c9:5f:
+                    8a:ff:1a:53:bf:78:19:e4:a2:7f:2d:66:18:c5:36:
+                    03:90:ff:b8:4d:e1:fc:5b:ef:a6:fa:b2:1a:3c:80:
+                    09:75:29:a5:b4:b9:39:95:34:a0:ab:0b:5a:03:92:
+                    24:af:71:0f:c4:77:ed:88:d5:96:36:19:cc:61:30:
+                    d1:b8:26:e6:95:2b:7e:c5:d7:27:b4:af:6f:56:b7:
+                    b1:88:50:64:9d:5d:b6:72:39:88:71:13:64:76:ee:
+                    bb:68:5d
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier: 
+                0D:4C:5E:3B:7B:A1:9F:AD:E1:62:87:8F:70:27:77:45:15:AA:C3:EE
+            X509v3 Authority Key Identifier: 
+                keyid:01:8C:AF:D8:AB:90:53:F0:38:29:61:74:69:1F:3C:68:F8:E8:17:11
+                DirName:/C=DE/ST=SA/L=Dresden/O=OpenVPN/OU=IT/CN=WinServer/name=HomePC/emailAddress=info@smarthome-agentur.de
+                serial:BA:72:92:FD:E6:FD:FF:D6
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+    Signature Algorithm: sha256WithRSAEncryption
+         8e:e7:df:90:04:55:0a:1f:b1:c5:6a:13:0d:92:35:4c:b9:86:
+         a7:b8:51:2a:69:17:25:2b:95:0b:6e:95:b2:ba:c7:92:ef:4d:
+         b4:ee:f6:63:6b:75:bb:92:31:f5:6f:4f:a1:3a:f5:9c:cb:8d:
+         2d:0e:f0:98:06:f5:da:20:cd:13:c8:28:52:cf:b7:38:98:c8:
+         dc:9c:fb:88:93:5b:46:3b:03:e5:ee:f7:bd:57:f5:c8:a1:2d:
+         92:e5:d7:d0:ba:0f:7f:08:cf:e2:70:83:ff:31:6b:67:ad:2a:
+         a1:6e:34:ab:53:06:01:3b:cd:b2:c0:f4:e7:b9:8f:cf:cc:3f:
+         12:c1:de:cc:78:9d:bc:38:4f:ce:71:bf:36:bb:40:27:80:a1:
+         1a:1d:8d:0f:16:f3:44:f7:5c:ac:70:c2:bc:81:15:1b:dc:03:
+         89:64:d7:8c:5a:0e:4c:31:6d:f9:f9:06:26:33:94:11:87:ee:
+         af:a5:57:ab:60:97:2c:34:58:1f:f6:78:60:a6:3c:e0:c8:9d:
+         cc:b2:60:27:95:3f:b3:93:e8:c6:d1:8f:f6:88:74:2b:19:8d:
+         84:cc:80:61:f0:6d:3d:45:6e:e0:2b:3e:bb:d5:c5:39:5b:f5:
+         d6:24:dd:62:04:05:96:da:a6:37:67:8d:b9:c0:b8:89:4a:c7:
+         99:a6:6d:8d:f7:de:82:5e:78:63:72:8f:8f:22:be:4e:71:37:
+         89:b4:14:0d:dc:9e:76:e3:95:6b:4f:e6:0d:5e:ae:99:ee:59:
+         ce:79:98:03:a2:b1:2f:ca:61:d1:d0:f7:62:cc:3e:49:04:55:
+         e2:f9:de:dc:1e:41:61:12:db:2f:ee:83:b8:8e:3d:ca:be:02:
+         b9:3e:0b:33:b0:de:9c:93:04:dd:92:7f:9c:75:9f:a9:d9:87:
+         46:35:73:df:2f:79:a8:f7:b0:1f:88:7d:a0:64:8f:f8:0a:10:
+         cf:a5:62:b0:35:09:5d:0f:11:fc:0d:cc:20:97:7a:f7:39:82:
+         e6:0a:45:5c:0f:97:69:a3:f2:f4:b2:13:a0:42:d3:3c:5d:97:
+         f4:e4:f9:fe:3f:4c:73:5d:a5:52:bd:fc:07:3d:da:44:de:35:
+         b5:62:2e:54:41:3e:6c:2f:f0:d9:ee:af:e8:b5:27:a2:b5:d6:
+         be:7f:8d:a1:a2:f6:e1:52:60:7b:af:6f:38:ef:eb:b1:4c:5b:
+         8d:60:fd:2e:42:d8:42:67:fb:71:52:47:cc:8f:7a:3d:03:62:
+         71:ab:cf:62:50:2e:48:97:83:ca:7a:d2:f0:2d:e9:c2:29:61:
+         82:38:00:c6:73:89:ec:0e:0c:3a:0f:87:16:54:be:e4:65:63:
+         8e:ba:d3:d6:5d:29:8b:20
+-----BEGIN CERTIFICATE-----
+MIIHAzCCBOugAwIBAgIBAjANBgkqhkiG9w0BAQsFADCBmjELMAkGA1UEBhMCREUx
+CzAJBgNVBAgTAlNBMRAwDgYDVQQHEwdEcmVzZGVuMRAwDgYDVQQKEwdPcGVuVlBO
+MQswCQYDVQQLEwJJVDESMBAGA1UEAxMJV2luU2VydmVyMQ8wDQYDVQQpEwZIb21l
+UEMxKDAmBgkqhkiG9w0BCQEWGWluZm9Ac21hcnRob21lLWFnZW50dXIuZGUwHhcN
+MTkwNDE4MTkwMjU1WhcNMjkwNDE1MTkwMjU1WjCBmTELMAkGA1UEBhMCREUxCzAJ
+BgNVBAgTAlNBMRAwDgYDVQQHEwdEcmVzZGVuMRAwDgYDVQQKEwdPcGVuVlBOMQsw
+CQYDVQQLEwJJVDERMA8GA1UEAxMIUGlDbGllbnQxDzANBgNVBCkTBkhvbWVQQzEo
+MCYGCSqGSIb3DQEJARYZaW5mb0BzbWFydGhvbWUtYWdlbnR1ci5kZTCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBAN8Ikh9DwUusNgIyeZAC4Lk+ODnk8tw0
+vfTtwX/d/uRteW4rksEEQy6cTFd2fCffPh+ejPIepSkVlJeA5dW8qPZfsscQFXQd
+RAV7PymrPYGbpXX4ihGEmdzR9gKheJBzWmOzA41SWqc8FnVB+1Z6EFArfptLM7Yy
+ioIWMN1KIQsCiprz5pWRw5bRTxivLVtjK8LFUPIx/mTPoB4H/9+TsmIYlEJ7jcl8
+9KgPiriMNmyN89jK+GvOCMceViNYLevlvkPFNlecvKNYW/e3ZLQ7hHOV7IuZKWpr
+5m9AkJCLk9fV/sso+rDaEPjhmrRnDQB3DahrJSR6/h5ptFim7QN8Cl0XQfUDo3Fz
+0toc/h4ky2nS6EM/9OWJ6Ie4Y8wxFebt8P8uDlKbR0n74yMuIyjG00HkBzOoyzp7
+1TDsiLIdu+935BxZEcRePUth5wbHvgn0crxoic8XLPtUmap9tZbSbLwvIyrd9jmH
+lqO16eq6+an32EgHqb64vqJKINjClkL5stCTzyplZ5e8AwbFt1aTHzEkbvNPHKtY
+AKSzdmiRj82VSslfiv8aU794GeSify1mGMU2A5D/uE3h/FvvpvqyGjyACXUppbS5
+OZU0oKsLWgOSJK9xD8R37YjVljYZzGEw0bgm5pUrfsXXJ7Svb1a3sYhQZJ1dtnI5
+iHETZHbuu2hdAgMBAAGjggFRMIIBTTAJBgNVHRMEAjAAMC0GCWCGSAGG+EIBDQQg
+Fh5FYXN5LVJTQSBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYEFA1MXjt7
+oZ+t4WKHj3And0UVqsPuMIHPBgNVHSMEgccwgcSAFAGMr9irkFPwOClhdGkfPGj4
+6BcRoYGgpIGdMIGaMQswCQYDVQQGEwJERTELMAkGA1UECBMCU0ExEDAOBgNVBAcT
+B0RyZXNkZW4xEDAOBgNVBAoTB09wZW5WUE4xCzAJBgNVBAsTAklUMRIwEAYDVQQD
+EwlXaW5TZXJ2ZXIxDzANBgNVBCkTBkhvbWVQQzEoMCYGCSqGSIb3DQEJARYZaW5m
+b0BzbWFydGhvbWUtYWdlbnR1ci5kZYIJALpykv3m/f/WMBMGA1UdJQQMMAoGCCsG
+AQUFBwMCMAsGA1UdDwQEAwIHgDANBgkqhkiG9w0BAQsFAAOCAgEAjuffkARVCh+x
+xWoTDZI1TLmGp7hRKmkXJSuVC26VsrrHku9NtO72Y2t1u5Ix9W9PoTr1nMuNLQ7w
+mAb12iDNE8goUs+3OJjI3Jz7iJNbRjsD5e73vVf1yKEtkuXX0LoPfwjP4nCD/zFr
+Z60qoW40q1MGATvNssD057mPz8w/EsHezHidvDhPznG/NrtAJ4ChGh2NDxbzRPdc
+rHDCvIEVG9wDiWTXjFoOTDFt+fkGJjOUEYfur6VXq2CXLDRYH/Z4YKY84MidzLJg
+J5U/s5PoxtGP9oh0KxmNhMyAYfBtPUVu4Cs+u9XFOVv11iTdYgQFltqmN2eNucC4
+iUrHmaZtjffegl54Y3KPjyK+TnE3ibQUDdyeduOVa0/mDV6ume5ZznmYA6KxL8ph
+0dD3Ysw+SQRV4vne3B5BYRLbL+6DuI49yr4CuT4LM7DenJME3ZJ/nHWfqdmHRjVz
+3y95qPewH4h9oGSP+AoQz6VisDUJXQ8R/A3MIJd69zmC5gpFXA+XaaPy9LIToELT
+PF2X9OT5/j9Mc12lUr38Bz3aRN41tWIuVEE+bC/w2e6v6LUnorXWvn+NoaL24VJg
+e69vOO/rsUxbjWD9LkLYQmf7cVJHzI96PQNicavPYlAuSJeDynrS8C3pwilhgjgA
+xnOJ7A4MOg+HFlS+5GVjjrrT1l0piyA=
+-----END CERTIFICATE-----

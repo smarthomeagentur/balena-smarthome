@@ -1,0 +1,66 @@
+#! /bin/bash
+export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
+sleep 5
+{
+eth0=`cat /sys/class/net/eth0/operstate` 2>/dev/null
+eth1=`cat /sys/class/net/eth1/operstate` 2>/dev/null
+eth2=`cat /sys/class/net/eth2/operstate` 2>/dev/null
+wlan0=`cat /sys/class/net/wlan0/operstate` 2>/dev/null
+wlan1=`cat /sys/class/net/wlan1/operstate` 2>/dev/null
+ppp0=`cat /sys/class/net/ppp0/operstate` 2>/dev/null
+} &> /dev/null
+echo "Start SD V1.3"
+if [ ! -z "$eth0" ]; then
+    echo "eth0 Present: $eth0"
+fi
+if [ ! -z "$eth1" ]; then
+    echo "eth1 Present: $eth1"
+    #nmcli connection down ext-ethernet1 && nmcli connection up ext-ethernet1
+fi
+if [ ! -z "$wlan0" ]; then
+    echo "wlan0 Present: $wlan0"
+    if [ ! -z "$WIFI_NAME" ]; then
+        echo "WIFI HOTSPOT: $WIFI_NAME"
+        echo "WIFI HOTSPOT PW: $WIFI_PW"
+        {
+        nmcli connection modify balena-hotspot1 802-11-wireless.mode ap
+        nmcli connection modify balena-hotspot1 ipv4.addresses 192.168.125.1/24
+        nmcli connection modify balena-hotspot1 ipv4.method shared
+        nmcli connection modify balena-hotspot1 802-11-wireless.hidden no
+        nmcli connection modify balena-hotspot1 802-11-wireless.ssid $WIFI_NAME
+        nmcli connection modify balena-hotspot1 802-11-wireless-security.psk $WIFI_PW
+        nmcli connection down balena-hotspot1 && nmcli connection up balena-hotspot1
+        } &> /dev/null
+    fi
+fi
+if [ ! -z "$wlan1" ]; then
+    echo "wlan1 Present: $wlan1"
+    if [ ! -z "$WIFI_CON_PW" ]; then
+        echo "Wifi Connection PW: $WIFI_CON_PW"
+        {
+        nmcli connection modify balena-wifi 802-11-wireless.ssid $WIFI_CON_NAME
+        nmcli connection modify balena-wifi 802-11-wireless-security.psk $WIFI_CON_PW
+        nmcli connection down balena-wifi && nmcli connection up balena-wifi
+        } &> /dev/null
+    fi
+fi
+if [ ! -z "$ppp0" ]; then
+    echo "GSM Present: $ppp0"
+    if [ ! -z "$GSM_APN" ]; then
+        echo "GSM APN: $GSM_APN"
+        ##{
+        #nmcli connection modify balena-cellular gsm.apn $GSM_APN
+        #} &> /dev/null
+    fi
+    {
+    nmcli connection down balena-cellular && nmcli connection up balena-cellular
+    } &> /dev/null
+fi
+if [ ! -z "$eth2" ]; then
+    echo "eth2 Present: $eth2"
+fi
+echo "....."
+echo "....."
+sleep 5
+
+/usr/src/app/run/option1

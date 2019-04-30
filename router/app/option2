@@ -1,0 +1,53 @@
+#! /bin/bash
+export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
+ip="null"
+oldip="null"
+plugged="null"
+while true; do
+    ip=`ifconfig eth0| sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'| cut -d'.' -f1-3`
+    ip2="$ip.$ROUTER_IP"
+    ip="$ip.0/24"
+    {
+    eth1=`cat /sys/class/net/eth1/operstate` 2>/dev/null
+    eth2=`cat /sys/class/net/eth2/operstate` 2>/dev/null
+    wlan0=`cat /sys/class/net/wlan0/operstate` 2>/dev/null
+    wlan1=`cat /sys/class/net/wlan1/operstate` 2>/dev/null
+    } &> /dev/null
+
+    if [ ! -z "$plugged" ]; then
+        echo "Network Changed"
+        if [ ! -z "$wlan1" ]; then
+            echo "Update WLAN1"
+            if [ ! -z "$eth1" ]; then
+                {
+                iptables -D FORWARD -i wlan1 -o eth1 -j ACCEPT
+                iptables -I FORWARD -i wlan1 -o eth1 -j ACCEPT
+                } &> /dev/null
+            fi
+        fi
+
+        if [ ! -z "$wlan0" ]; then
+            echo "Update WLAN0"
+            if [ ! -z "$eth1" ]; then
+                {
+                iptables -D FORWARD -i wlan0 -o eth1 -j ACCEPT
+                iptables -I FORWARD -i wlan0 -o eth1 -j ACCEPT
+                } &> /dev/null
+            fi
+        fi
+
+        if [ ! -z "$eth1" ]; then
+            echo "Update ETH1"
+            {
+            iptables -D FORWARD -i eth0 -o eth1 -j ACCEPT
+            iptables -I FORWARD -i eth0 -o eth1 -j ACCEPT
+            iptables -D FORWARD -i eth1 -o eth0 -j ACCEPT
+            iptables -I FORWARD -i eth1 -o eth0 -j ACCEPT
+            } &> /dev/null
+        fi
+
+    fi
+
+    plugged=`iptables -t filter -L FORWARD --line-numbers -n | head -n 3 | grep RELATED`
+    sleep 20
+done

@@ -11,7 +11,7 @@ mac-address-blacklist=
 [ipv4]
 dns-search=
 method=shared
-address1=192.168.125.2/24
+address1=192.168.101.1/24
 
 [ipv6]
 addr-gen-mode=stable-privacy
