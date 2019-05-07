@@ -29,7 +29,8 @@ if [ ! -z "$wlan0" ]; then
         nmcli connection modify balena-hotspot1 802-11-wireless.hidden no
         nmcli connection modify balena-hotspot1 802-11-wireless.ssid $WIFI_NAME
         nmcli connection modify balena-hotspot1 802-11-wireless-security.psk $WIFI_PW
-        nmcli connection down balena-hotspot1 && nmcli connection up balena-hotspot1
+        nmcli connection down balena-hotspot1
+        nmcli connection up balena-hotspot1
         } &> /dev/null
     fi
 fi
@@ -40,7 +41,8 @@ if [ ! -z "$wlan1" ]; then
         {
         nmcli connection modify balena-wifi 802-11-wireless.ssid $WIFI_CON_NAME
         nmcli connection modify balena-wifi 802-11-wireless-security.psk $WIFI_CON_PW
-        nmcli connection down balena-wifi && nmcli connection up balena-wifi
+        nmcli connection down balena-wifi
+        nmcli connection up balena-wifi
         } &> /dev/null
     fi
 fi
@@ -53,7 +55,8 @@ if [ ! -z "$ppp0" ]; then
         #} &> /dev/null
     fi
     {
-    nmcli connection down balena-cellular && nmcli connection up balena-cellular
+    nmcli connection down balena-cellular
+    nmcli connection up balena-cellular
     } &> /dev/null
 fi
 if [ ! -z "$eth2" ]; then

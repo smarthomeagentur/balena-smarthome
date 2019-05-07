@@ -25,7 +25,8 @@ while true; do
             {
                 iptables -D FORWARD -o eth0 -j DROP
                 nmcli connection modify my-ethernet1 ipv4.addresses $ip2
-                nmcli connection down my-ethernet1 && nmcli connection up my-ethernet1
+                nmcli connection down my-ethernet1
+                nmcli connection up my-ethernet1
             } &> /dev/null
         else
             echo "No IP Set"
@@ -81,7 +82,8 @@ while true; do
         if ((con_test != 0)); then
             echo "Connection Break"
             {
-            nmcli connection down balena-cellular && nmcli connection up balena-cellular
+            nmcli connection down balena-cellular
+            nmcli connection up balena-cellular
             } &> /dev/null
         fi
     fi

@@ -2,7 +2,7 @@ FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch-run
 ENV INITSYSTEM on
 RUN echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y iptables openvpn
+RUN apt-get update && apt-get install -y iptables openvpn wget
 RUN apt-get -t stretch-backports install -yq \
 	network-manager && \
 	apt-get clean && rm -rf /var/lib/apt/lists/* && \
@@ -10,5 +10,7 @@ RUN apt-get -t stretch-backports install -yq \
 
 WORKDIR /usr/src/app
 COPY . .
+COPY ./app/* /usr/src/run/
 ENV UDEV=1
+#CMD ./update
 CMD ./run/start
