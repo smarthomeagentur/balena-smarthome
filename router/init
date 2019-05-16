@@ -1,0 +1,10 @@
+#! /bin/bash
+
+FILE=/usr/src/app/run/start
+if [ -f "$FILE" ]; then
+    echo "Init Done, no Copy"
+else
+    echo "Init Done, Copy first File"
+    cp ./app/* ./run/
+fi
+/usr/src/app/run/start

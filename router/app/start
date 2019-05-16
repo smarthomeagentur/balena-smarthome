@@ -1,6 +1,6 @@
 #! /bin/bash
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
-sleep 5
+sleep 15
 {
 eth0=`cat /sys/class/net/eth0/operstate` 2>/dev/null
 eth1=`cat /sys/class/net/eth1/operstate` 2>/dev/null
@@ -9,17 +9,21 @@ wlan0=`cat /sys/class/net/wlan0/operstate` 2>/dev/null
 wlan1=`cat /sys/class/net/wlan1/operstate` 2>/dev/null
 ppp0=`cat /sys/class/net/ppp0/operstate` 2>/dev/null
 } &> /dev/null
-echo "Start SD V1.3"
+echo "Start SD V1.5"
 if [ ! -z "$eth0" ]; then
     echo "eth0 Present: $eth0"
 fi
 if [ ! -z "$eth1" ]; then
     echo "eth1 Present: $eth1"
     #nmcli connection down ext-ethernet1 && nmcli connection up ext-ethernet1
+    nmcli connection modify ext-ethernet1 ipv4.method shared
+    nmcli connection modify ext-ethernet1 ipv4.addresses 192.168.101.1/24
+    nmcli connection down ext-ethernet1
+    nmcli connection up ext-ethernet1
 fi
 if [ ! -z "$wlan0" ]; then
     echo "wlan0 Present: $wlan0"
-    if [ ! -z "$WIFI_NAME" ]; then
+    if [[ ! -z "$WIFI_NAME" ]] && [[ $(echo ${#WIFI_NAME}) -ge 3 ]]; then
         echo "WIFI HOTSPOT: $WIFI_NAME"
         echo "WIFI HOTSPOT PW: $WIFI_PW"
         {
@@ -32,17 +36,27 @@ if [ ! -z "$wlan0" ]; then
         nmcli connection down balena-hotspot1
         nmcli connection up balena-hotspot1
         } &> /dev/null
+    else
+        echo "WIFI HOTSPOT: No Setup"
+        {
+        nmcli connection down balena-hotspot1
+        } &> /dev/null
     fi
 fi
 if [ ! -z "$wlan1" ]; then
     echo "wlan1 Present: $wlan1"
-    if [ ! -z "$WIFI_CON_PW" ]; then
+    if [ ! -z "$WIFI_CON_PW" ] && [[ $(echo ${#WIFI_CON_PW}) -ge 3 ]] && [[ $(echo ${#WIFI_CON_NAME}) -ge 3 ]]; then
         echo "Wifi Connection PW: $WIFI_CON_PW"
         {
         nmcli connection modify balena-wifi 802-11-wireless.ssid $WIFI_CON_NAME
         nmcli connection modify balena-wifi 802-11-wireless-security.psk $WIFI_CON_PW
         nmcli connection down balena-wifi
         nmcli connection up balena-wifi
+        } &> /dev/null
+    else
+        echo "WIFI CONNECT: No Setup"
+        {
+        nmcli connection down balena-wifi
         } &> /dev/null
     fi
 fi

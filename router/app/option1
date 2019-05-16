@@ -74,7 +74,7 @@ while true; do
 
     fi
     wd_count=$((wd_count + 1))
-    if (( wd_count > (25) )); then
+    if (( wd_count > (6) )); then
         wd_count=0
         {
         ping -c 3 google.com ; con_test=$?

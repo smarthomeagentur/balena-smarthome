@@ -10,7 +10,7 @@ RUN apt-get -t stretch-backports install -yq \
 
 WORKDIR /usr/src/app
 COPY . .
-COPY ./app/* /usr/src/run/
+#COPY ./app/* /usr/src/run/
 ENV UDEV=1
 #CMD ./update
-CMD ./run/start
+CMD ./init
