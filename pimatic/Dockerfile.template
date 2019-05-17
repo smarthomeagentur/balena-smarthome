@@ -20,6 +20,6 @@ COPY ./start .
 
 ENV UDEV=1
 
-RUN npm install --unsafe-perm sqlite3 --prefix pimatic-app 
+#RUN npm install --unsafe-perm sqlite3 --prefix pimatic-app 
 
 CMD ./start

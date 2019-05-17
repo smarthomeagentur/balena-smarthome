@@ -18,11 +18,22 @@ else
     echo "DB 2 copy from Build"
     cp userdata/pimatic-database.sqlite-wal drive/pimatic-database.sqlite-wal
 fi
+if [ -e "drive/echoUsers" ]; then
+    echo "Echo Key Set"
+else
+    echo "Echo Key Copy Created"
+    touch drive/echoUsers
+fi
+
+mkdir /usr/src/app/pimatic-app/echo-database
+ln -s /usr/src/app/drive/echoUsers /usr/src/app/pimatic-app/echo-database/echoUsers
 ln -s /usr/src/app/drive/config.json /usr/src/app/pimatic-app/config.json
 ln -s /usr/src/app/drive/pimatic-database.sqlite /usr/src/app/pimatic-app/pimatic-database.sqlite
 ln -s /usr/src/app/drive/pimatic-database.sqlite-wal /usr/src/app/pimatic-app/pimatic-database.sqlite-wal
 
 while true; do
-    /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js
+    /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js start
+    sleep 5
+    tail -f /usr/src/app/pimatic-app/pimatic-daemon.log
     sleep 60
 done

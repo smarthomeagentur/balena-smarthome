@@ -10,11 +10,9 @@ mac-address-blacklist=
 
 [ipv4]
 dns-search=
-method=shared
-address1=192.168.101.1/24
+method=auto
 
 [ipv6]
 addr-gen-mode=stable-privacy
 dns-search=
-ip6-privacy=0
-method=ignore
+method=auto

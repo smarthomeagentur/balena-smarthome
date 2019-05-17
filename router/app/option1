@@ -21,10 +21,16 @@ while true; do
         plugged="null"
         if [[ $ip == *"."*"."* ]]; then
             echo "IP Set to $ip"
-            echo "Second IP $ip2"
+            if [[ ! -z "$ROUTER_IP" ]]; then
+                echo "Second IP $ip2"
+            else
+                echo "No Second IP"
+            fi
             {
                 iptables -D FORWARD -o eth0 -j DROP
-                nmcli connection modify my-ethernet1 ipv4.addresses $ip2
+                if [[ ! -z "$ROUTER_IP" ]]; then
+                    nmcli connection modify my-ethernet1 ipv4.addresses $ip2
+                fi
                 nmcli connection down my-ethernet1
                 nmcli connection up my-ethernet1
             } &> /dev/null
@@ -76,15 +82,17 @@ while true; do
     wd_count=$((wd_count + 1))
     if (( wd_count > (6) )); then
         wd_count=0
-        {
-        ping -c 3 google.com ; con_test=$?
-        } &> /dev/null
-        if ((con_test != 0)); then
-            echo "Connection Break"
+        if [ ! -z "$ppp0" ]; then
             {
-            nmcli connection down balena-cellular
-            nmcli connection up balena-cellular
+            ping -c 3 google.com ; con_test=$?
             } &> /dev/null
+            if ((con_test != 0)); then
+                echo "Connection Break"
+                {
+                nmcli connection down balena-cellular
+                nmcli connection up balena-cellular
+                } &> /dev/null
+            fi
         fi
     fi
 
