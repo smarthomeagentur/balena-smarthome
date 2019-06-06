@@ -39,6 +39,10 @@ if [ ! -z "$wlan0" ]; then
     else
         echo "WIFI HOTSPOT: No Setup"
         {
+        nmcli connection modify balena-hotspot1 802-11-wireless.mode infrastructure    
+        nmcli connection modify balena-hotspot1 802-11-wireless.hidden yes
+        nmcli connection modify balena-hotspot1 ipv4.addresses
+        nmcli connection modify balena-hotspot1 ipv4.method auto
         nmcli connection down balena-hotspot1
         } &> /dev/null
     fi
