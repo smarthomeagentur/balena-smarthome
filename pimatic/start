@@ -32,7 +32,12 @@ ln -s /usr/src/app/drive/pimatic-database.sqlite /usr/src/app/pimatic-app/pimati
 ln -s /usr/src/app/drive/pimatic-database.sqlite-wal /usr/src/app/pimatic-app/pimatic-database.sqlite-wal
 
 while true; do
-    /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js start
+    while true; do
+        {
+        /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js start
+        } &> /dev/null
+        sleep 120
+    done &
     sleep 5
     tail -f /usr/src/app/pimatic-app/pimatic-daemon.log
     sleep 60

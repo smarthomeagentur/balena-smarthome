@@ -1,5 +1,5 @@
 
-FROM klutchell/dnscrypt-proxy:2.0.23-arm
+FROM klutchell/dnscrypt-proxy:2.0.24-arm
 
 ## Servers from the "public-resolvers" source (see down below) can
 ## be viewed here: https://dnscrypt.info/public-servers
