@@ -3,8 +3,8 @@ ENV INITSYSTEM on
 
 RUN apt-get update && apt-get install -y build-essential git wget python jq netcat
 
-RUN wget https://nodejs.org/dist/v4.6.2/node-v4.6.2-linux-armv6l.tar.gz -P /tmp
-RUN cd /usr/local && tar xzvf /tmp/node-v4.6.2-linux-armv6l.tar.gz --strip=1
+RUN wget https://nodejs.org/dist/v10.16.0/node-v10.16.0-linux-armv7l.tar.gz -P /tmp
+RUN cd /usr/local && tar xzvf /tmp/node-v10.16.0-linux-armv7l.tar.gz --strip=1
 
 
 WORKDIR /usr/src/app
@@ -14,12 +14,21 @@ RUN mkdir userdata
 #Copy UserData
 COPY ./config ./userdata/
 
+RUN npm install -g node-gyp
+RUN npm install -g node-pre-gyp
+
 RUN npm install pimatic --prefix pimatic-app --production
 
 COPY ./start .
 
 ENV UDEV=1
 
-#RUN npm install --unsafe-perm sqlite3 --prefix pimatic-app 
+RUN npm install --unsafe-perm sqlite3 --prefix pimatic-app 
+
+RUN npm install --unsafe-perm pimatic-cron --prefix pimatic-app 
+RUN npm install --unsafe-perm pimatic-mobile-frontend --prefix pimatic-app 
+RUN npm install --unsafe-perm pimatic-shell-execute --prefix pimatic-app 
+RUN npm install --unsafe-perm pimatic-echo --prefix pimatic-app 
+RUN npm install dfischbach/pimatic-coc#master --prefix pimatic-app 
 
 CMD ./start

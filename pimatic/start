@@ -31,14 +31,15 @@ ln -s /usr/src/app/drive/config.json /usr/src/app/pimatic-app/config.json
 ln -s /usr/src/app/drive/pimatic-database.sqlite /usr/src/app/pimatic-app/pimatic-database.sqlite
 ln -s /usr/src/app/drive/pimatic-database.sqlite-wal /usr/src/app/pimatic-app/pimatic-database.sqlite-wal
 
+#npm install pimatic --prefix pimatic-app --production
 while true; do
-    while true; do
-        {
-        /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js start
-        } &> /dev/null
-        sleep 120
-    done &
-    sleep 5
+    {
+    /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js start
+    } &> /dev/null
+    sleep 120
+done &
+while true; do
+    sleep 15
     tail -f /usr/src/app/pimatic-app/pimatic-daemon.log
     sleep 60
 done
