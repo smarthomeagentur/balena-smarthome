@@ -1,0 +1,12 @@
+#! /bin/bash
+#while true; do
+  #  {
+   # /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js start
+    #} &> /dev/null
+    #sleep 120
+#done &
+echo "Start"
+sleep 5
+while true; do
+    sleep 60
+done

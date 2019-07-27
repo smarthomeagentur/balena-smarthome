@@ -1,0 +1,26 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch-run
+ENV INITSYSTEM on
+
+RUN apt-get update && apt-get install -y wget cron bzip2
+
+WORKDIR /usr/src/app
+
+#RUN mkdir backup
+RUN mkdir sync
+
+RUN wget -O /usr/src/app/gdrive https://drive.google.com/uc?id=1f5Q-yAwUYZYt_frYjodFHbU0v7ppQkem&export=download && wait
+RUN chmod +x /usr/src/app/gdrive
+RUN mv gdrive /bin/
+
+COPY ./start .
+COPY ./backup.sh .
+COPY ./token_v2.json /root/.gdrive/
+RUN sed -i -e 's/\r$//' backup.sh
+
+RUN chmod +x /usr/src/app/backup.sh
+
+RUN echo "00 2 * * * /usr/src/app/backup.sh" | crontab
+
+ENV UDEV=1
+
+CMD ./start

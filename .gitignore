@@ -1,3 +1,4 @@
 node_modules/
 zway/config
 pimatic/config
+backup/token_v2.json
