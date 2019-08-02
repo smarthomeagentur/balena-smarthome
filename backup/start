@@ -1,12 +1,15 @@
 #! /bin/bash
-#while true; do
-  #  {
-   # /usr/src/app/pimatic-app/node_modules/pimatic/pimatic.js start
-    #} &> /dev/null
-    #sleep 120
-#done &
-echo "Start"
+
 sleep 5
+echo "Start"
+echo "$RESIN_DEVICE_UUID" > "config"
+echo "$FILE_LIMIT" >> "config"
+echo "$BALENA_APP_NAME" >> "config"
+echo "$BALENA_DEVICE_NAME_AT_INIT" >> "config"
+echo "$GDRIVE_FOLDER_ID" >> "config"
+sleep 5
+service cron restart
+
 while true; do
     sleep 60
 done
