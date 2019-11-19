@@ -1,0 +1,21 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch-run
+ENV INITSYSTEM on
+ENV UDEV=1
+
+RUN apt-get update && apt-get install -y wget nano
+
+RUN wget http://deconz.dresden-elektronik.de/raspbian/beta/deconz-latest-beta.deb
+
+RUN dpkg -i deconz-latest-beta.deb || true
+
+RUN apt-get update && apt-get install -f \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+#WORKDIR /usr/src/app
+
+#RUN gpasswd -a $USER dialout
+
+COPY ./init /
+COPY ./start.sh /
+
+CMD /init

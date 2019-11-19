@@ -32,6 +32,7 @@ RUN npm install --unsafe-perm pimatic-shell-execute --prefix pimatic-app
 RUN npm install --unsafe-perm pimatic-echo --prefix pimatic-app 
 RUN npm install dfischbach/pimatic-coc#master --prefix pimatic-app 
 RUN npm install smarthomeagentur/pimatic-mysensors#master --prefix pimatic-app
+RUN npm install smarthomeagentur/pimatic-hue-zll#master --prefix pimatic-app
 
 
 CMD ./start

@@ -11,7 +11,7 @@ GDRIVE_FOLDER_ID=$(echo ${config[4]})
 
 mkdir /usr/src/app/sync || true
 mkdir /usr/src/app/sync/$RESIN_DEVICE_UUID\_$BALENA_APP_NAME || true
-tar -cvjf /usr/src/app/sync/$RESIN_DEVICE_UUID\_$BALENA_APP_NAME/$(date +%Y-%m-%d_%H:%M:%S)\_$BALENA_APP_NAME\_$RESIN_DEVICE_UUID\_$BALENA_DEVICE_NAME_AT_INIT.tar.bz2 /usr/src/app/backup/
+tar -cvjf /usr/src/app/sync/$RESIN_DEVICE_UUID\_$BALENA_APP_NAME/$RESIN_DEVICE_UUID\_$(date +%Y-%m-%d_%H:%M:%S)\_$BALENA_APP_NAME\_$BALENA_DEVICE_NAME_AT_INIT.tar.bz2 /usr/src/app/backup/
 gdrive sync upload --keep-remote /usr/src/app/sync/ $GDRIVE_FOLDER_ID
 rm -r /usr/src/app/sync
 

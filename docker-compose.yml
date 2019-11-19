@@ -10,6 +10,7 @@ volumes:
     zway_config3:
     pihole_config:
     dnsmasq_config:
+    deconz_conf:
 services:
   router:
     restart: always
@@ -44,11 +45,7 @@ services:
   dnscrypt-proxy:
     build: ./dnscrypt-proxy
     ports:
-      - '192.168.101.200:5300:53/tcp'
-      - '192.168.101.200:5300:53/udp'
-    dns:
-      - '127.0.0.1'
-      - '1.1.1.1'
+      - '192.168.101.200:5053:5053/udp'
   pimatic:
     build: ./pimatic
     volumes: 
@@ -88,6 +85,31 @@ services:
             - 'openhab_conf:/openhab/conf'
             - 'openhab_userdata:/openhab/userdata'
             - 'openhab_addons:/openhab/addons'
+    privileged: true
+    labels:
+      io.resin.features.dbus: '1'
+      io.resin.features.kernel-modules: '1'
+      io.resin.features.firmware: '1'
+  backup:
+    build: ./backup
+    volumes: 
+            - 'pimatic_data:/usr/src/app/backup/pimatic_data'
+            - 'zway_config1:/usr/src/app/backup/zway_config1'
+            - 'zway_config2:/usr/src/app/backup/zway_config2'
+            - 'zway_config3:/usr/src/app/backup/zway_config3'
+            - 'router_conf:/usr/src/app/backup/router_conf'
+    privileged: true
+    labels:
+      io.resin.features.dbus: '1'
+      io.resin.features.kernel-modules: '1'
+      io.resin.features.firmware: '1'
+  deconz:
+    build: ./deconz
+    ports:
+      - "85:85"
+      - "8443:8443"
+    volumes: 
+            - 'deconz_conf:/root/.local/share/dresden-elektronik/deCONZ'
     privileged: true
     labels:
       io.resin.features.dbus: '1'

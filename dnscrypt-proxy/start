@@ -1,0 +1,4 @@
+#! /bin/bash
+
+sed -r "s/^(# )?log_level = .+$/log_level = 6/" -i /config/dnscrypt-proxy.toml
+sed -r "s/^(# )?use_syslog = .+$/use_syslog = false/" -i /config/dnscrypt-proxy.toml
