@@ -16,6 +16,5 @@ RUN apt-get update && apt-get install -f \
 #RUN gpasswd -a $USER dialout
 
 COPY ./init /
-COPY ./start.sh /
 
 CMD /init

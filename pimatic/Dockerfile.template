@@ -1,12 +1,8 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch-run
+FROM balenalib/%%BALENA_MACHINE_NAME%%-node:10.16
 ENV INITSYSTEM on
 
 RUN apt-get update && apt-get install -y build-essential git wget python jq netcat \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN wget https://nodejs.org/dist/v10.16.0/node-v10.16.0-linux-armv7l.tar.gz -P /tmp
-RUN cd /usr/local && tar xzvf /tmp/node-v10.16.0-linux-armv7l.tar.gz --strip=1
-
 
 WORKDIR /usr/src/app
 
@@ -29,10 +25,9 @@ RUN npm install --unsafe-perm sqlite3 --prefix pimatic-app
 RUN npm install --unsafe-perm pimatic-cron --prefix pimatic-app 
 RUN npm install --unsafe-perm pimatic-mobile-frontend --prefix pimatic-app 
 RUN npm install --unsafe-perm pimatic-shell-execute --prefix pimatic-app 
-RUN npm install --unsafe-perm pimatic-echo --prefix pimatic-app 
+#RUN npm install --unsafe-perm pimatic-echo --prefix pimatic-app
+RUN npm install michbeck100/pimatic-echo#master --prefix pimatic-app
+RUN npm install --unsafe-perm pimatic-mysensors --prefix pimatic-app 
 RUN npm install dfischbach/pimatic-coc#master --prefix pimatic-app 
-RUN npm install smarthomeagentur/pimatic-mysensors#master --prefix pimatic-app
-RUN npm install smarthomeagentur/pimatic-hue-zll#master --prefix pimatic-app
-
 
 CMD ./start

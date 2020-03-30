@@ -1,12 +1,35 @@
+FROM balenalib/raspberrypi3-alpine-golang:1.13 as build
 
-FROM klutchell/dnscrypt-proxy:arm32v7-2.0.27
-#FROM --platform=linux/arm/v6 klutchell/dnscrypt-proxy:2.0.31
+WORKDIR /go/src/github.com/DNSCrypt/dnscrypt-proxy/
 
-#RUN mkdir /config
-#COPY ./dnscrypt-proxy.toml /config/
-#COPY ./dnscrypt-proxy.toml /app/example-dnscrypt-proxy.toml
-COPY ./entrypoint.sh /
+ARG DNSCRYPT_PROXY_VERSION=2.0.42
+ARG DNSCRYPT_PROXY_URL=https://github.com/DNSCrypt/dnscrypt-proxy/archive/
 
-# Lower Output
-#RUN sed -r "s/^(# )?log_level = .+$/log_level = 6/" -i /app/example-dnscrypt-proxy.toml
-#RUN sed -r "s/^(# )?use_syslog = .+$/use_syslog = false/" -i /app/example-dnscrypt-proxy.toml
+ENV CGO_ENABLED 0
+
+RUN apk add --no-cache ca-certificates curl \
+	&& curl -L "${DNSCRYPT_PROXY_URL}${DNSCRYPT_PROXY_VERSION}.tar.gz" -o /tmp/dnscrypt-proxy.tar.gz \
+	&& tar xzf /tmp/dnscrypt-proxy.tar.gz --strip 1 -C /go/src/github.com/DNSCrypt \
+	&& go build -v -ldflags="-s -w"
+
+WORKDIR /config
+
+RUN cp -a /go/src/github.com/DNSCrypt/dnscrypt-proxy/example-* ./
+
+COPY dnscrypt-proxy.toml ./
+
+# ----------------------------------------------------------------------------
+
+FROM scratch
+
+COPY --from=build /etc/passwd /etc/group /etc/
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+COPY --from=build /go/src/github.com/DNSCrypt/dnscrypt-proxy/dnscrypt-proxy /usr/local/bin/
+COPY --from=build --chown=nobody:nogroup /config /config
+
+USER nobody
+
+ENTRYPOINT ["dnscrypt-proxy", "-config", "/config/dnscrypt-proxy.toml"]
+
+RUN ["dnscrypt-proxy", "-version"]
