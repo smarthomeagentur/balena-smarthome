@@ -2,15 +2,15 @@ FROM balenalib/raspberrypi3-alpine-golang:1.13 as build
 
 WORKDIR /go/src/github.com/DNSCrypt/dnscrypt-proxy/
 
-ARG DNSCRYPT_PROXY_VERSION=2.0.42
+ARG DNSCRYPT_PROXY_VERSION=2.0.44
 ARG DNSCRYPT_PROXY_URL=https://github.com/DNSCrypt/dnscrypt-proxy/archive/
 
 ENV CGO_ENABLED 0
 
-RUN apk add --no-cache ca-certificates curl \
-	&& curl -L "${DNSCRYPT_PROXY_URL}${DNSCRYPT_PROXY_VERSION}.tar.gz" -o /tmp/dnscrypt-proxy.tar.gz \
+RUN install_packages ca-certificates curl \
+	&& curl -fsSL "${DNSCRYPT_PROXY_URL}${DNSCRYPT_PROXY_VERSION}.tar.gz" -o /tmp/dnscrypt-proxy.tar.gz \
 	&& tar xzf /tmp/dnscrypt-proxy.tar.gz --strip 1 -C /go/src/github.com/DNSCrypt \
-	&& go build -v -ldflags="-s -w"
+	&& go build -v -ldflags="-s -w" -mod vendor
 
 WORKDIR /config
 
